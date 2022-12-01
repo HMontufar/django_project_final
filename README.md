@@ -6,7 +6,7 @@
 
 - Clonar el proyecto
 *** bash
-git clone https://github.com/HMontufar/django_project_blog.git
+git clone https://github.com/HMontufar/django_project_final.git
 
 ***
 
