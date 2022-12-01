@@ -1,0 +1,33 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block my_blog_title %}
+Edita tu pasatiempo
+{% endblock %}
+
+{% block my_blog_header %}
+<header class="masthead" style="background-image: url('/static/home/assets/img/header-arletina.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row align-items-center gx-4 gx-lg-5">
+            <div class="col-md-10 col-lg-8 col-xl-7 text-center text-lg-start">
+                <div class="text-center text-lg-start site-heading">
+                    <h1 class="display-4 fw-bold lh-1 mb-3">Edita tu pasatiempo</h1>
+                    <p class="col-lg-10 fs-4 subheading">El diario de Arletina</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block my_blog_content %}
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary text-uppercase" value="Guardar pasatiempo" />
+        </form>
+    </div>
+    <!-- Divider-->
+    <hr class="my-4" />
+{% endblock %}

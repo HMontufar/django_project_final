@@ -1,0 +1,80 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block my_blog_title %}
+Detalle de historia
+{% endblock %}
+
+{% block my_blog_header %}
+<header class="masthead" style="background-image: url('/static/home/assets/img/header-arletina.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row align-items-center gx-4 gx-lg-5">
+            <div class="col-md-10 col-lg-8 col-xl-7 text-center text-lg-start">
+                <div class="text-center text-lg-start site-heading">
+                    <h1 class="display-4 fw-bold lh-1 mb-3">{{ history.name }}</h1>
+                    <p class="col-lg-10 fs-4 subheading">Detalles de tu historia</p>
+                    <div class="mx-auto">
+                        <a class="btn btn-primary text-uppercase" href="{% url 'history:history-add' %}">Cuentame tu historia</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+
+{% block my_blog_content %}
+<!-- Post preview-->
+<div class="post-preview">
+    <h3 class="col-lg-10 fs-4 subheading">Código: {{ history.code }}</h3>
+    <p class="post-meta">
+        Creado por
+        <span>{{ history.owner.username }}</span>
+        ( {{ history.created_at }} )
+        <br>
+        Última fecha de actualización ( {{ history.updated_at }} )
+    </p>
+
+    <!-- Image -->
+    {% if history.image %}
+        <div style="text-align: center;">
+            <img class="img-fluid rounded-3 shadow-lg mb-4 d-block mx-lg-auto" src="{{ history.image.url }}">
+        </div>
+    {% endif %}
+
+    <!-- Description -->
+    <p class="card-text ">{{ history.description|safe }}</p> <!-- ckeditor-->
+
+    <!-- Update-Delete link only for the owner -->
+    {% if user == history.owner or user.is_superuser %}
+    <div class="mx-auto">
+        <a class="btn btn-primary text-uppercase" href="{% url 'history:history-update' history.id %}"><i class="fa fa-pencil"></i> Editar pasatiempo</a>
+        <a class="btn btn-primary text-uppercase" href="{% url 'history:history-delete' history.id %}"><i class="fa fa-trash"></i> Eliminar pasatiempo</a>
+    </div>
+    {% endif %}
+    
+    <!-- Divider-->
+    <hr class="my-4" />
+
+    <!-- Comment creation -->
+    <form method="POST" action="{% url 'history:comment-create' history.id %}">
+        {% csrf_token %}
+        {{ comment_form }}
+    <input type="submit" value="Publicar comentario">
+    </form>
+    {% if not comments %}
+        <p></p>
+    {% endif %}
+
+    <!-- Comments list -->
+    {% for comment in comments %}
+        <p> {{ comment.text }}
+            ({{ comment.owner.username }} | {{ comment.updated_at }})
+            {% if user == comment.owner or user.is_superuser %}
+            <a href="{% url 'history:comment-delete' comment.id %}"><i class="fa fa-trash" style="color: #881a1a;"></i></a>
+            {% endif %}
+        </p>
+    {% endfor %}
+</div>
+{% endblock %}

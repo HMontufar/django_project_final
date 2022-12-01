@@ -1,0 +1,44 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block my_blog_title %}
+Productos
+{% endblock %}
+
+{% block my_blog_header %}
+<header class="masthead" style="background-image: url('/static/home/assets/img/header-arletina.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row align-items-center gx-4 gx-lg-5">
+            <div class="col-md-10 col-lg-8 col-xl-7 text-center text-lg-start">
+                <div class="text-center text-lg-start site-heading">
+                    <h1 class="display-4 fw-bold lh-1 mb-3">Conoce mi linea de productos</h1>
+                    <p class="col-lg-10 fs-4 subheading">Linea Arletina Intima ¡Te fascinara!</p>
+                    <div class="mx-auto">
+                        <a class="btn btn-primary text-uppercase" href="{% url 'shop:shop-add' %}">Crear nuevo producto</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block my_blog_content %}
+    <h3 class="col-lg-10 fs-4 subheading text-center">Linea Arletina Intima</h3>
+    <hr class="my-4" />
+    {% for shop in shop_list %}
+        <!-- Post preview-->
+        <div class="post-preview">
+            <a href="{% url 'shop:shop-detail' shop.id %}">
+                <h3 class="col-lg-10 fs-4 subheading">Producto: {{ shop.name }}</h3>
+            </a>
+                <p class="col-lg-10 fs-5 subheading post-meta">Tipo: {{ shop.modelo }}</p>
+                <p class="post-meta">Colección: {{ shop.collection }}</p>
+            <div class="mx-auto">
+                <a class="btn btn-primary text-uppercase" href="{% url 'shop:shop-detail' shop.id %}">Ver producto →</a>
+            </div>
+        </div>
+        <!-- Divider-->
+        <hr class="my-4" />
+    {% endfor %}
+{% endblock %}

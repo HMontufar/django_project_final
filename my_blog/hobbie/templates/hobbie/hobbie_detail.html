@@ -1,0 +1,39 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block my_blog_title %}
+Detalle Pasatiempo
+{% endblock %}
+
+{% block my_blog_header %}
+<header class="masthead" style="background-image: url('/static/home/assets/img/header-arletina.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row align-items-center gx-4 gx-lg-5">
+            <div class="col-md-10 col-lg-8 col-xl-7 text-center text-lg-start">
+                <div class="text-center text-lg-start site-heading">
+                    <h1 class="display-4 fw-bold lh-1 mb-3">{{ hobbie.name }} </h1>
+                    <p class="col-lg-10 fs-4 subheading">Detalles de tu pasatiempo</p>
+                    <div class="mx-auto">
+                        <a class="btn btn-primary text-uppercase" href="{% url 'hobbie:hobbie-add' %}">Platicame tu pasatiempo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+
+{% block my_blog_content %}
+<!-- Post preview-->
+<div class="post-preview">
+    <h3 class="post-subtitle">Pasatiempo: {{ hobbie.name }}</h3>
+    <p class="col-lg-10 fs-5 subheading post-meta">{{ hobbie.description}}</p>
+    <div class="mx-auto">
+        <a class="btn btn-primary text-uppercase" href="{% url 'hobbie:hobbie-update' hobbie.id %}"><i class="fa fa-pencil"></i> Editar</a>
+        <a class="btn btn-primary text-uppercase" href="{% url 'hobbie:hobbie-delete' hobbie.id %}"><i class="fa fa-trash"></i> Eliminar</a>
+    </div>
+</div>
+{% endblock %}
+
+
